@@ -7,11 +7,11 @@ static int bitset_next(unsigned int bitset, int previous);
 static int box_bitset(unsigned int sudoku[9][9], int row_index, int col_index);
 static int row_bitset(unsigned int sudoku[9][9], int row_index);
 static int col_bitset(unsigned int sudoku[9][9], int col_index);
-static bool duplicate_in_box_bitset(unsigned int sudoku[9][9], int row_index, int col_index);
-static bool duplicate_in_row_bitset(unsigned int sudoku[9][9], int col_index);
-static bool duplicate_in_col_bitset(unsigned int sudoku[9][9], int col_index);
-static bool load_sudoku_line(unsigned int sudoku[9][9], int ch);
-static bool load_sudoku_square(unsigned int sudoku[9][9], int ch);
+static bool box_conflict(unsigned int sudoku[9][9], int row_index, int col_index);
+static bool row_conflict(unsigned int sudoku[9][9], int col_index);
+static bool col_conflict(unsigned int sudoku[9][9], int col_index);
+static bool load_in_line_format(unsigned int sudoku[9][9], int ch);
+static bool load_in_square_format(unsigned int sudoku[9][9], int ch);
 
 /* ************************************************************** *
  *               Functions required by assignment                 *
@@ -116,14 +116,14 @@ bool is_valid(unsigned int sudoku[9][9])
 {
     for (int i = 0; i < 9; i++)
     {
-        if (duplicate_in_col_bitset(sudoku, i) || duplicate_in_row_bitset(sudoku, i))
+        if (col_conflict(sudoku, i) || row_conflict(sudoku, i))
         {
             return false;
         }
         for (int j = 0; j < 9; j++)
         {
             if (sudoku[i][j] == 0x0 ||
-                (j % 3 == 0 && i % 3 == 0 && duplicate_in_box_bitset(sudoku, i, j)))
+                (j % 3 == 0 && i % 3 == 0 && box_conflict(sudoku, i, j)))
             {
                 return false;
             }
@@ -162,7 +162,7 @@ bool load(unsigned int sudoku[9][9])
     int ch = getchar();
     if (ch == '+')
     {
-        if (!load_sudoku_square(sudoku, ch))
+        if (!load_in_square_format(sudoku, ch))
         {
             fprintf(stderr, "invalid input\n");
             return false;
@@ -170,7 +170,7 @@ bool load(unsigned int sudoku[9][9])
     }
     else if(ch >= '0' && ch <= '9')
     {
-        if (!load_sudoku_line(sudoku, ch))
+        if (!load_in_line_format(sudoku, ch))
         {
             fprintf(stderr, "invalid input\n");
             return false;

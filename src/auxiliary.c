@@ -103,7 +103,7 @@ static int col_bitset(unsigned int sudoku[9][9], int col_index)
     return done;
 }
 
-static bool duplicate_in_box_bitset(unsigned int sudoku[9][9],
+static bool box_conflict(unsigned int sudoku[9][9],
                                     int row_index, int col_index)
 {
     int done = 0x00;
@@ -126,7 +126,7 @@ static bool duplicate_in_box_bitset(unsigned int sudoku[9][9],
     return false;
 }
 
-static bool duplicate_in_row_bitset(unsigned int sudoku[9][9], int row_index)
+static bool row_conflict(unsigned int sudoku[9][9], int row_index)
 {
     int done = 0x00;
     for (int i = 0; i < 9; ++i)
@@ -145,7 +145,7 @@ static bool duplicate_in_row_bitset(unsigned int sudoku[9][9], int row_index)
     return false;
 }
 
-static bool duplicate_in_col_bitset(unsigned int sudoku[9][9], int col_index)
+static bool col_conflict(unsigned int sudoku[9][9], int col_index)
 {
     int done = 0x00;
     for (int i = 0; i < 9; ++i)
@@ -164,7 +164,7 @@ static bool duplicate_in_col_bitset(unsigned int sudoku[9][9], int col_index)
     return false;
 }
 
-static bool load_sudoku_line(unsigned int sudoku[9][9], int ch)
+static bool load_in_line_format(unsigned int sudoku[9][9], int ch)
 {
     for (int count = 0; count < 81; count++)
     {
@@ -185,7 +185,7 @@ static bool load_sudoku_line(unsigned int sudoku[9][9], int ch)
     return ch == '\n' || ch == EOF;
 }
 
-static int check_char_square(unsigned int sudoku[9][9], int count)
+static int load_number_lines(unsigned int sudoku[9][9], int count)
 {
     int ch;
     for (size_t j = 0; j < ROWS * LINE_LEN; j++)
@@ -215,7 +215,7 @@ static int check_char_square(unsigned int sudoku[9][9], int count)
     return count;
 }
 
-static bool load_sudoku_square(unsigned int sudoku[9][9], int ch)
+static bool load_in_square_format(unsigned int sudoku[9][9], int ch)
 {
     int count = 0;
     for(int i = 0; i < 4; i++)
@@ -239,7 +239,7 @@ static bool load_sudoku_square(unsigned int sudoku[9][9], int ch)
             return false;
         }
 
-        count = check_char_square(sudoku, count);
+        count = load_number_line(sudoku, count);
         if (count % 27 != 0)
         {
             return false;

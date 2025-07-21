@@ -79,7 +79,7 @@ static int col_bitset(unsigned int sudoku[9][9], int col_index);
  * @param row_index of the top most most row in box, one of 0, 3, 6
  * @param col_index of the left most column in box, one of 0, 3, 6
  */
-static bool duplicate_in_box_bitset(unsigned int sudoku[9][9],
+static bool box_conflict(unsigned int sudoku[9][9],
                                     int row_index, int col_index);
 
 /**
@@ -88,7 +88,7 @@ static bool duplicate_in_box_bitset(unsigned int sudoku[9][9],
  * @param sudoku 2D array of digit bitsets
  * @param row_index
  */
-static bool duplicate_in_row_bitset(unsigned int sudoku[9][9], int row_index);
+static bool row_conflict(unsigned int sudoku[9][9], int row_index);
 
 /**
  * @brief Checks, whether there is a conflict in the col.
@@ -96,7 +96,7 @@ static bool duplicate_in_row_bitset(unsigned int sudoku[9][9], int row_index);
  * @param sudoku 2D array of digit bitsets
  * @param col_index
  */
-static bool duplicate_in_col_bitset(unsigned int sudoku[9][9], int col_index);
+static bool col_conflict(unsigned int sudoku[9][9], int col_index);
 
 /**
  * @brief Loads sudoku from stdin in single line format.
@@ -106,16 +106,18 @@ static bool duplicate_in_col_bitset(unsigned int sudoku[9][9], int col_index);
  *
  * @return true, if the input was in the right format
  */
-static bool load_sudoku_line(unsigned int sudoku[9][9], int ch);
+static bool load_in_line_format(unsigned int sudoku[9][9], int ch);
 
 /**
- * @brief Checks, whether a line with numbers when loading square format
- * is correct and also loads numbers into sudoku grid.
+ * @brief Loads 3 sets of consecutive number lines, when loading sudoku
+ *        in square format. Also checks the format.
  *
  * @param sudoku 2D array of digit bitsets
  * @param count of already loaded numbers into sudoku
+ * 
+ * @return count of last loaded char 
  */
-static int check_char_square(unsigned int sudoku[9][9], int count);
+static int load_number_lines(unsigned int sudoku[9][9], int count);
 
 /**
  * @brief Loads sudoku from stdin in square format.
@@ -125,4 +127,4 @@ static int check_char_square(unsigned int sudoku[9][9], int count);
  *
  * @return true, if the input was in the right format
  */
-static bool load_sudoku_square(unsigned int sudoku[9][9], int ch);
+static bool load_in_square_format(unsigned int sudoku[9][9], int ch);
