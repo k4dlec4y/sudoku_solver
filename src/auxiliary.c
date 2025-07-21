@@ -9,7 +9,7 @@ const unsigned int ROWS = 3;
 const char LINE[] = "+=======+=======+=======+";
 const char NUMBER_LINE[] = "| x x x | x x x | x x x |\n";
 
-static unsigned int bitset_drop(unsigned int original, int number)
+unsigned int bitset_drop(unsigned int original, int number)
 {
     if (number < 1 || number > 9)
     {
@@ -18,7 +18,7 @@ static unsigned int bitset_drop(unsigned int original, int number)
     return original & (~(0x1 << (number - 1)));
 }
 
-static bool bitset_is_set(unsigned int original, int query)
+bool bitset_is_set(unsigned int original, int query)
 {
     if (query < 1 || query > 9)
     {
@@ -27,7 +27,7 @@ static bool bitset_is_set(unsigned int original, int query)
 	return ((original >> (query - 1)) & 0x1) == 0x1;
 }
 
-static bool bitset_is_unique(unsigned int original)
+bool bitset_is_unique(unsigned int original)
 {
     bool found = false;
 	for (int i = 0; i < 9; ++i)
@@ -44,7 +44,7 @@ static bool bitset_is_unique(unsigned int original)
     return found;
 }
 
-static int bitset_next(unsigned int bitset, int previous)
+int bitset_next(unsigned int bitset, int previous)
 {
     ++previous;
     while (previous < 10)
@@ -58,7 +58,7 @@ static int bitset_next(unsigned int bitset, int previous)
     return -1;
 }
 
-static int box_bitset(unsigned int sudoku[9][9], int row_index, int col_index)
+int box_bitset(unsigned int sudoku[9][9], int row_index, int col_index)
 {
     int done = 0x00;
     for (int i = 0; i < 3; ++i)
@@ -75,7 +75,7 @@ static int box_bitset(unsigned int sudoku[9][9], int row_index, int col_index)
     return done;
 }
 
-static int row_bitset(unsigned int sudoku[9][9], int row_index)
+int row_bitset(unsigned int sudoku[9][9], int row_index)
 {
     int done = 0x00;
     for (int i = 0; i < 9; ++i)
@@ -89,7 +89,7 @@ static int row_bitset(unsigned int sudoku[9][9], int row_index)
     return done;
 }
 
-static int col_bitset(unsigned int sudoku[9][9], int col_index)
+int col_bitset(unsigned int sudoku[9][9], int col_index)
 {
     int done = 0x00;
     for (int i = 0; i < 9; ++i)
@@ -103,7 +103,7 @@ static int col_bitset(unsigned int sudoku[9][9], int col_index)
     return done;
 }
 
-static bool box_conflict(unsigned int sudoku[9][9],
+bool box_conflict(unsigned int sudoku[9][9],
                                     int row_index, int col_index)
 {
     int done = 0x00;
@@ -126,7 +126,7 @@ static bool box_conflict(unsigned int sudoku[9][9],
     return false;
 }
 
-static bool row_conflict(unsigned int sudoku[9][9], int row_index)
+bool row_conflict(unsigned int sudoku[9][9], int row_index)
 {
     int done = 0x00;
     for (int i = 0; i < 9; ++i)
@@ -145,7 +145,7 @@ static bool row_conflict(unsigned int sudoku[9][9], int row_index)
     return false;
 }
 
-static bool col_conflict(unsigned int sudoku[9][9], int col_index)
+bool col_conflict(unsigned int sudoku[9][9], int col_index)
 {
     int done = 0x00;
     for (int i = 0; i < 9; ++i)
@@ -164,7 +164,7 @@ static bool col_conflict(unsigned int sudoku[9][9], int col_index)
     return false;
 }
 
-static bool load_in_line_format(unsigned int sudoku[9][9], int ch)
+bool load_in_line_format(unsigned int sudoku[9][9], int ch)
 {
     for (int count = 0; count < 81; count++)
     {
@@ -185,7 +185,7 @@ static bool load_in_line_format(unsigned int sudoku[9][9], int ch)
     return ch == '\n' || ch == EOF;
 }
 
-static int load_number_lines(unsigned int sudoku[9][9], int count)
+int load_number_lines(unsigned int sudoku[9][9], int count)
 {
     int ch;
     for (size_t j = 0; j < ROWS * LINE_LEN; j++)
@@ -215,7 +215,7 @@ static int load_number_lines(unsigned int sudoku[9][9], int count)
     return count;
 }
 
-static bool load_in_square_format(unsigned int sudoku[9][9], int ch)
+bool load_in_square_format(unsigned int sudoku[9][9], int ch)
 {
     int count = 0;
     for(int i = 0; i < 4; i++)

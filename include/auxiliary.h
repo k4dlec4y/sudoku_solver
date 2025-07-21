@@ -8,7 +8,7 @@
  *
  * @return          new value of the cell without the number included
  */
-static unsigned int bitset_drop(unsigned int original, int number);
+unsigned int bitset_drop(unsigned int original, int number);
 
 /**
  * @brief  Check whether given number is present in the set.
@@ -18,7 +18,7 @@ static unsigned int bitset_drop(unsigned int original, int number);
  *
  * @return          true if set, false otherwise
  */
-static bool bitset_is_set(unsigned int original, int query);
+bool bitset_is_set(unsigned int original, int query);
 
 /**
  * @brief  Check whether given cell has a unique value assigned.
@@ -27,7 +27,7 @@ static bool bitset_is_set(unsigned int original, int query);
  *
  * @return          true if set, false otherwise
  */
-static bool bitset_is_unique(unsigned int original);
+bool bitset_is_unique(unsigned int original);
 
 /**
  * @brief Return next number present in bit set.
@@ -45,7 +45,7 @@ static bool bitset_is_unique(unsigned int original);
  *
  * @note The value previous might not be in the bitset
  */
-static int bitset_next(unsigned int bitset, int previous);
+int bitset_next(unsigned int bitset, int previous);
 
 /**
  * @brief Compute the bitset of all done numbers in the box.
@@ -54,7 +54,7 @@ static int bitset_next(unsigned int bitset, int previous);
  * @param row_index of the top most row in box, one of 0, 3, 6
  * @param col_index of the left most column in box, one of 0, 3, 6
  */
-static int box_bitset(unsigned int sudoku[9][9], int row_index, int col_index);
+int box_bitset(unsigned int sudoku[9][9], int row_index, int col_index);
 
 /**
  * @brief Compute the bitset of all done numbers in the row.
@@ -62,7 +62,7 @@ static int box_bitset(unsigned int sudoku[9][9], int row_index, int col_index);
  * @param sudoku 2D array of digit bitsets
  * @param row_index
  */
-static int row_bitset(unsigned int sudoku[9][9], int row_index);
+int row_bitset(unsigned int sudoku[9][9], int row_index);
 
 /**
  * @brief Compute the bitset of all done numbers in the col.
@@ -70,7 +70,7 @@ static int row_bitset(unsigned int sudoku[9][9], int row_index);
  * @param sudoku 2D array of digit bitsets
  * @param col_index
  */
-static int col_bitset(unsigned int sudoku[9][9], int col_index);
+int col_bitset(unsigned int sudoku[9][9], int col_index);
 
 /**
  * @brief Checks, whether there is a conflict in the box.
@@ -79,7 +79,7 @@ static int col_bitset(unsigned int sudoku[9][9], int col_index);
  * @param row_index of the top most most row in box, one of 0, 3, 6
  * @param col_index of the left most column in box, one of 0, 3, 6
  */
-static bool box_conflict(unsigned int sudoku[9][9],
+bool box_conflict(unsigned int sudoku[9][9],
                                     int row_index, int col_index);
 
 /**
@@ -88,7 +88,7 @@ static bool box_conflict(unsigned int sudoku[9][9],
  * @param sudoku 2D array of digit bitsets
  * @param row_index
  */
-static bool row_conflict(unsigned int sudoku[9][9], int row_index);
+bool row_conflict(unsigned int sudoku[9][9], int row_index);
 
 /**
  * @brief Checks, whether there is a conflict in the col.
@@ -96,7 +96,7 @@ static bool row_conflict(unsigned int sudoku[9][9], int row_index);
  * @param sudoku 2D array of digit bitsets
  * @param col_index
  */
-static bool col_conflict(unsigned int sudoku[9][9], int col_index);
+bool col_conflict(unsigned int sudoku[9][9], int col_index);
 
 /**
  * @brief Loads sudoku from stdin in single line format.
@@ -106,7 +106,7 @@ static bool col_conflict(unsigned int sudoku[9][9], int col_index);
  *
  * @return true, if the input was in the right format
  */
-static bool load_in_line_format(unsigned int sudoku[9][9], int ch);
+bool load_in_line_format(unsigned int sudoku[9][9], int ch);
 
 /**
  * @brief Loads 3 sets of consecutive number lines, when loading sudoku
@@ -117,7 +117,7 @@ static bool load_in_line_format(unsigned int sudoku[9][9], int ch);
  * 
  * @return count of last loaded char 
  */
-static int load_number_lines(unsigned int sudoku[9][9], int count);
+int load_number_lines(unsigned int sudoku[9][9], int count);
 
 /**
  * @brief Loads sudoku from stdin in square format.
@@ -127,4 +127,4 @@ static int load_number_lines(unsigned int sudoku[9][9], int count);
  *
  * @return true, if the input was in the right format
  */
-static bool load_in_square_format(unsigned int sudoku[9][9], int ch);
+bool load_in_square_format(unsigned int sudoku[9][9], int ch);
