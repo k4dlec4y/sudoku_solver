@@ -72,15 +72,57 @@ static int row_bitset(unsigned int sudoku[9][9], int row_index);
  */
 static int col_bitset(unsigned int sudoku[9][9], int col_index);
 
+/**
+ * @brief Checks, whether there is a conflict in the box.
+ *
+ * @param sudoku 2D array of digit bitsets
+ * @param row_index of the top most most row in box, one of 0, 3, 6
+ * @param col_index of the left most column in box, one of 0, 3, 6
+ */
 static bool duplicate_in_box_bitset(unsigned int sudoku[9][9],
                                     int row_index, int col_index);
 
+/**
+ * @brief Checks, whether there is a conflict in the row.
+ *
+ * @param sudoku 2D array of digit bitsets
+ * @param row_index
+ */
 static bool duplicate_in_row_bitset(unsigned int sudoku[9][9], int row_index);
 
+/**
+ * @brief Checks, whether there is a conflict in the col.
+ *
+ * @param sudoku 2D array of digit bitsets
+ * @param col_index
+ */
 static bool duplicate_in_col_bitset(unsigned int sudoku[9][9], int col_index);
 
+/**
+ * @brief Loads sudoku from stdin in single line format.
+ *
+ * @param sudoku 2D array of digit bitsets
+ * @param ch already loaded char, based on which the format was decided
+ *
+ * @return true, if the input was in the right format
+ */
 static bool load_sudoku_line(unsigned int sudoku[9][9], int ch);
 
+/**
+ * @brief Checks, whether a line with numbers when loading square format
+ * is correct and also loads numbers into sudoku grid.
+ *
+ * @param sudoku 2D array of digit bitsets
+ * @param count of already loaded numbers into sudoku
+ */
 static int check_char_square(unsigned int sudoku[9][9], int count);
 
+/**
+ * @brief Loads sudoku from stdin in square format.
+ *
+ * @param sudoku 2D array of digit bitsets
+ * @param ch already loaded char, based on which the format was decided
+ *
+ * @return true, if the input was in the right format
+ */
 static bool load_sudoku_square(unsigned int sudoku[9][9], int ch);
