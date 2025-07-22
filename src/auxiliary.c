@@ -62,8 +62,8 @@ int bitset_next(unsigned int bitset, int previous)
 
 int box_bitset(unsigned int sudoku[9][9], int row_index, int col_index)
 {
-    assert(row_index >= 0 && row_index < 10);
-    assert(col_index >= 0 && col_index < 10);
+    assert(row_index == 0 || row_index == 3 || row_index == 6);
+    assert(col_index == 0 || col_index == 3 || col_index == 6);
 
     int done = 0x00;
 
@@ -115,19 +115,21 @@ int col_bitset(unsigned int sudoku[9][9], int col_index)
 
 bool box_conflict(unsigned int sudoku[9][9], int row_index, int col_index)
 {
+    assert(row_index == 0 || row_index == 3 || row_index == 6);
+    assert(col_index == 0 || col_index == 3 || col_index == 6);
+
     int done = 0x00;
 
-    for (int i = 0; i < 3; ++i) {
-        for (int j = 0; j < 3; ++j) {
+    for (int i = row_index; i < row_index + 3; ++i) {
+        for (int j = col_index; j < col_index + 3; ++j) {
 
-            unsigned int bitset = sudoku[row_index + i][col_index + j];
+            unsigned int bitset = sudoku[i][j];
+
             if (bitset_is_unique(bitset)) {
-
-                int num_in_bitset = (0x1 << (bitset_next(bitset, 0) - 1));
-                if ((done & num_in_bitset) > 0)
+                if ((done & bitset) > 0)
                     return true;
 
-                done |= num_in_bitset;
+                done |= bitset;
             }
         }
     }
@@ -137,18 +139,19 @@ bool box_conflict(unsigned int sudoku[9][9], int row_index, int col_index)
 
 bool row_conflict(unsigned int sudoku[9][9], int row_index)
 {
+    assert(row_index >= 0 && row_index < 10);
+
     int done = 0x00;
 
     for (int i = 0; i < 9; ++i) {
 
         unsigned int bitset = sudoku[row_index][i];
-        if (bitset_is_unique(bitset)) {
 
-            int num_in_bitset = (0x1 << (bitset_next(bitset, 0) - 1));
-            if ((done & num_in_bitset) > 0)
+        if (bitset_is_unique(bitset)) {
+            if ((done & bitset) > 0)
                 return true;
 
-            done |= num_in_bitset;
+            done |= bitset;
         }
     }
 
@@ -157,18 +160,19 @@ bool row_conflict(unsigned int sudoku[9][9], int row_index)
 
 bool col_conflict(unsigned int sudoku[9][9], int col_index)
 {
+    assert(col_index >= 0 && col_index < 10);
+
     int done = 0x00;
 
     for (int i = 0; i < 9; ++i) {
 
         unsigned int bitset = sudoku[i][col_index];
-        if (bitset_is_unique(bitset)) {
 
-            int num_in_bitset = (0x1 << (bitset_next(bitset, 0) - 1));
-            if ((done & num_in_bitset) > 0)
+        if (bitset_is_unique(bitset)) {
+            if ((done & bitset) > 0)
                 return true;
 
-            done |= num_in_bitset;
+            done |= bitset;
         }
     }
 
