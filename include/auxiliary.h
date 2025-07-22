@@ -1,6 +1,8 @@
 #ifndef AUXILIARY_H
 #define AUXILIARY_H
 
+const char LINE[] = "+=======+=======+=======+\n";
+
 /**
  * @brief  Converts a number to it's bitset representation in sudoku/
  * 
