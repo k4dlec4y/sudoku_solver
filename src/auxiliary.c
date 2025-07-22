@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include "../include/auxiliary.h"
@@ -11,48 +12,46 @@ const char NUMBER_LINE[] = "| x x x | x x x | x x x |\n";
 
 unsigned int num_to_bitset(int number)
 {
+    assert(number > 0 && number < 10);
+
     return 0x1 << (number - 1);
 }
 
 unsigned int bitset_drop(unsigned int original, int number)
 {
-    if (number < 1 || number > 9)
-        return 0;
+    assert(original <= FULL_BITSET);
+    assert(number > 0 && number < 10);
 
-    return original & (~(0x1 << (number - 1)));
+    return original & (~num_to_bitset(number));
 }
 
 bool bitset_is_set(unsigned int original, int query)
 {
-    if (query < 1 || query > 9)
-        return false;
+    assert(original <= FULL_BITSET);
+    assert(query > 0 && query < 10);
 
-    return ((original >> (query - 1)) & 0x1) == 0x1;
+    return (original >> (query - 1)) & 0x1;
 }
 
 bool bitset_is_unique(unsigned int original)
 {
-    bool found = false;
+    assert(original <= FULL_BITSET);
 
-	for (int i = 0; i < 9; ++i) {
-        if (((original >> i) & 0x1) == 0x1) {
+    if (original == 0)
+        return false;
 
-            if (found)
-                return false;
-    
-            found = true;
-        }
-    }
-
-    return found;
+    return (original & (original - 1)) == 0;
 }
 
 int bitset_next(unsigned int bitset, int previous)
 {
+    assert(bitset <= FULL_BITSET);
+    assert(previous >= 0 && previous < 10);
+
     ++previous;
 
     while (previous < 10) {
-        if (((bitset >> (previous - 1)) & 0x1) == 0x1)
+        if ((bitset >> (previous - 1)) & 0x1)
             return previous;
 
         ++previous;
