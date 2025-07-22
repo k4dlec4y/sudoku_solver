@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <stdbool.h>
 #include "../include/auxiliary.h"
 
 void bitset_drop_test(void)
@@ -39,109 +40,109 @@ void bitset_next_test(void)
 
 void box_bitset_test(unsigned int sudoku[9][9])
 {
-    sudoku[0][0] = 0x1;  // 1
-    sudoku[0][1] = 0x11;
-    sudoku[0][2] = 0x11;
+    sudoku[0][0] = 0b1;  // 1
+    sudoku[0][1] = 0b11;
+    sudoku[0][2] = 0b11;
 
-    sudoku[1][0] = 0x10;  // 2
-    sudoku[1][1] = 0x11;
-    sudoku[1][2] = 0x10000;  // 5
+    sudoku[1][0] = 0b10;  // 2
+    sudoku[1][1] = 0b11;
+    sudoku[1][2] = 0b10000;  // 5
 
-    sudoku[2][0] = 0x110000;
-    sudoku[2][1] = 0x11;
-    sudoku[2][2] = 0x100000000;  // 9
+    sudoku[2][0] = 0b110000;
+    sudoku[2][1] = 0b11;
+    sudoku[2][2] = 0b100000000;  // 9
 
     assert(box_bitset(sudoku, 0, 0) == 0b100010011);
 }
 
 void row_bitset_test(unsigned int sudoku[9][9])
 {
-    sudoku[1][0] = 0x1;  // 1
-    sudoku[1][1] = 0x11;
-    sudoku[1][2] = 0x11;
+    sudoku[1][0] = 0b1;  // 1
+    sudoku[1][1] = 0b11;
+    sudoku[1][2] = 0b11;
 
-    sudoku[1][3] = 0x100;  // 3
-    sudoku[1][4] = 0x11;
-    sudoku[1][5] = 0x100000;  // 6
+    sudoku[1][3] = 0b100;  // 3
+    sudoku[1][4] = 0b11;
+    sudoku[1][5] = 0b100000;  // 6
 
-    sudoku[1][6] = 0x110000;
-    sudoku[1][7] = 0x11;
-    sudoku[1][8] = 0x100000000;  // 9
+    sudoku[1][6] = 0b110000;
+    sudoku[1][7] = 0b11;
+    sudoku[1][8] = 0b100000000;  // 9
 
     assert(row_bitset(sudoku, 1) == 0b100100101);
 }
 
 void col_bitset_test(unsigned int sudoku[9][9])
 {
-    sudoku[0][2] = 0x1;  // 1
-    sudoku[1][2] = 0x11;
-    sudoku[2][2] = 0x11;
+    sudoku[0][2] = 0b1;  // 1
+    sudoku[1][2] = 0b11;
+    sudoku[2][2] = 0b11;
 
-    sudoku[3][2] = 0x10;  // 2
-    sudoku[4][2] = 0x11;
-    sudoku[5][2] = 0x10000;  // 6
+    sudoku[3][2] = 0b10;  // 2
+    sudoku[4][2] = 0b11;
+    sudoku[5][2] = 0b100000;  // 6
 
-    sudoku[6][2] = 0x110000;
-    sudoku[7][2] = 0x11;
-    sudoku[8][2] = 0x100000000;  // 9
+    sudoku[6][2] = 0b110000;
+    sudoku[7][2] = 0b11;
+    sudoku[8][2] = 0b100000000;  // 9
 
     assert(col_bitset(sudoku, 2) == 0b100100011);
 }
 
 void box_conflict_test(unsigned int sudoku[9][9])
 {
-    sudoku[0][0] = 0x1;  // 1
-    sudoku[0][1] = 0x11;
-    sudoku[0][2] = 0x11;
+    sudoku[0][0] = 0b1;  // 1
+    sudoku[0][1] = 0b11;
+    sudoku[0][2] = 0b11;
 
-    sudoku[1][0] = 0x10;  // 2
-    sudoku[1][1] = 0x11;
-    sudoku[1][2] = 0x10000;  // 5
+    sudoku[1][0] = 0b10;  // 2
+    sudoku[1][1] = 0b11;
+    sudoku[1][2] = 0b10000;  // 5
 
-    sudoku[2][0] = 0x110000;
-    sudoku[2][1] = 0x11;
-    sudoku[2][2] = 0x100000000;  // 9
+    sudoku[2][0] = 0b110000;
+    sudoku[2][1] = 0b11;
+    sudoku[2][2] = 0b100000000;  // 9
 
     assert(!box_conflict(sudoku, 0, 0));
-    sudoku[2][1] = 0x100000000;  // 9
+    sudoku[2][1] = 0b100000000;  // 9
     assert(box_conflict(sudoku, 0, 0));
 }
 
-void box_bitset_test(unsigned int sudoku[9][9])
+void row_conflict_test(unsigned int sudoku[9][9])
 {
-    sudoku[1][0] = 0x1;  // 1
-    sudoku[1][1] = 0x11;
-    sudoku[1][2] = 0x11;
+    sudoku[1][0] = 0b1;  // 1
+    sudoku[1][1] = 0b11;
+    sudoku[1][2] = 0b11;
 
-    sudoku[1][3] = 0x100;  // 3
-    sudoku[1][4] = 0x11;
-    sudoku[1][5] = 0x100000;  // 6
+    sudoku[1][3] = 0b100;  // 3
+    sudoku[1][4] = 0b11;
+    sudoku[1][5] = 0b100000;  // 6
 
-    sudoku[1][6] = 0x110000;
-    sudoku[1][7] = 0x11;
-    sudoku[1][8] = 0x100000000;  // 9
+    sudoku[1][6] = 0b110000;
+    sudoku[1][7] = 0b11;
+    sudoku[1][8] = 0b100000000;  // 9
 
     assert(!row_conflict(sudoku, 1));
-    sudoku[1][4] = 0x100000;
+    sudoku[1][4] = 0b100000;
     assert(row_conflict(sudoku, 1));
 }
 
-void col_bitset_test(unsigned int sudoku[9][9])
+void col_conflict_test(unsigned int sudoku[9][9])
 {
-    sudoku[0][2] = 0x1;  // 1
-    sudoku[1][2] = 0x11;
-    sudoku[2][2] = 0x11;
+    sudoku[0][2] = 0b1;  // 1
+    sudoku[1][2] = 0b11;
+    sudoku[2][2] = 0b11;
 
-    sudoku[3][2] = 0x10;  // 2
-    sudoku[4][2] = 0x11;
-    sudoku[5][2] = 0x10000;  // 6
+    sudoku[3][2] = 0b10;  // 2
+    sudoku[4][2] = 0b11;
+    sudoku[5][2] = 0b10000;  // 6
 
-    sudoku[6][2] = 0x110000;
-    sudoku[7][2] = 0x11;
-    sudoku[8][2] = 0x100000000;  // 9
+    sudoku[6][2] = 0b110000;
+    sudoku[7][2] = 0b11;
+    sudoku[8][2] = 0b100000000;  // 9
 
     assert(!col_conflict(sudoku, 2));
-    sudoku[4][2] = 0x1;
+    sudoku[4][2] = 0b1;
     assert(col_conflict(sudoku, 2));
 }
 
