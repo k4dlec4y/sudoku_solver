@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <stdbool.h>
-#include "sudoku.h"
-#include "auxiliary.h"
+#include "../include/sudoku.h"
+#include "../include/auxiliary.h"
 
 bool eliminate_row(unsigned int sudoku[9][9], int row_index)
 {
@@ -59,8 +59,6 @@ bool eliminate_box(unsigned int sudoku[9][9], int row_index, int col_index)
 {
     assert(row_index > 0 && row_index < 10);
     assert(col_index > 0 && col_index < 10);
-    row_index = (row_index / 3) * 3;  // round down to i % 3 == 0
-    col_index = (col_index / 3) * 3;
 
     bool eliminated = false;
     unsigned int done_numbers = box_bitset(sudoku, row_index, col_index);
@@ -138,63 +136,6 @@ bool solve(unsigned int sudoku[9][9])
 
     return !needs_solving(sudoku);
 }
-
-bool load(unsigned int sudoku[9][9])
-{
-    int ch = getchar();
-
-    if (ch == '+') {
-        if (!load_in_square_format(sudoku, ch))
-            goto error;
-    }
-    
-    else if (ch >= '0' && ch <= '9') {
-        if (!load_in_line_format(sudoku, ch))
-            goto error;
-    }
-
-    else
-        goto error;
-
-    return true;
-
-error:
-    fprintf(stderr, "invalid input\n");
-    return false;
-}
-
-void print(unsigned int sudoku[9][9])
-{
-    for (int i = 0; i < 3; i++) {
-
-        printf(LINE);
-
-        for (int j = 0; j < 3; j++) {
-            for (int k = 0; k < 9; k++) {
-
-                if (k % 3 == 0)
-                    printf("| ");
-
-                unsigned int bitset = sudoku[i * 3 + j][k];
-
-                if (bitset == 0)
-                    printf("! ");
-                else if (bitset_is_unique(bitset))
-                    printf("%d ", bitset_next(bitset, 0));
-                else
-                    printf(". ");
-            }
-
-            printf("|\n");
-        }
-    }
-    printf(LINE);
-}
-
-/*void generate(unsigned int sudoku[9][9])
-{
-    return; // todo
-}*/
 
 bool generic_solve(unsigned int sudoku[9][9])
 {

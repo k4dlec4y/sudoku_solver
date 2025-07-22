@@ -20,7 +20,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(BUILD_DIR)
 	$(CC) $(CFLAGS) $< -o $@
 
-tests: $(TEST_DIR)/main.c $(SRC_DIR)/auxiliary.c
+tests: $(TEST_DIR)/main.c $(SRC_DIR)/auxiliary.c $(SRC_DIR)/input_output.c
 	@mkdir -p $(BUILD_DIR)
 	$(CC) $(TFLAGS) $^ -o $(BUILD_DIR)/test
 	@chmod u+x $(BUILD_DIR)/test

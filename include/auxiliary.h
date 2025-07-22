@@ -1,8 +1,6 @@
 #ifndef AUXILIARY_H
 #define AUXILIARY_H
 
-const char LINE[] = "+=======+=======+=======+\n";
-
 /**
  * @brief  Converts a number to it's bitset representation in sudoku/
  * 
@@ -92,7 +90,7 @@ int col_bitset(unsigned int sudoku[9][9], int col_index);
  * @param col_index of the left most column in box, one of 0, 3, 6
  */
 bool box_conflict(unsigned int sudoku[9][9],
-                                    int row_index, int col_index);
+                  int row_index, int col_index);
 
 /**
  * @brief Checks, whether there is a conflict in the row.
@@ -109,36 +107,5 @@ bool row_conflict(unsigned int sudoku[9][9], int row_index);
  * @param col_index
  */
 bool col_conflict(unsigned int sudoku[9][9], int col_index);
-
-/**
- * @brief Loads sudoku from stdin in single line format.
- *
- * @param sudoku 2D array of digit bitsets
- * @param ch already loaded char, based on which the format was decided
- *
- * @return true, if the input was in the right format
- */
-bool load_in_line_format(unsigned int sudoku[9][9], int ch);
-
-/**
- * @brief Loads 3 sets of consecutive number lines, when loading sudoku
- *        in square format. Also checks the format.
- *
- * @param sudoku 2D array of digit bitsets
- * @param count of already loaded numbers into sudoku
- * 
- * @return count of last loaded char 
- */
-int load_number_lines(unsigned int sudoku[9][9], int count);
-
-/**
- * @brief Loads sudoku from stdin in square format.
- *
- * @param sudoku 2D array of digit bitsets
- * @param ch already loaded char, based on which the format was decided
- *
- * @return true, if the input was in the right format
- */
-bool load_in_square_format(unsigned int sudoku[9][9], int ch);
 
 #endif // AUXILIARY_H
