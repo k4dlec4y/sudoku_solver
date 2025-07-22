@@ -1,3 +1,6 @@
+#ifndef AUXILIARY_H
+#define AUXILIARY_H
+
 /**
  * @brief  Converts a number to it's bitset representation in sudoku/
  * 
@@ -135,3 +138,5 @@ int load_number_lines(unsigned int sudoku[9][9], int count);
  * @return true, if the input was in the right format
  */
 bool load_in_square_format(unsigned int sudoku[9][9], int ch);
+
+#endif // AUXILIARY_H

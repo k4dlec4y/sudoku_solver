@@ -1,17 +1,5 @@
 #include "sudoku.h"
-
-static unsigned int bitset_drop(unsigned int original, int number);
-static bool bitset_is_set(unsigned int original, int query);
-static bool bitset_is_unique(unsigned int original);
-static int bitset_next(unsigned int bitset, int previous);
-static int box_bitset(unsigned int sudoku[9][9], int row_index, int col_index);
-static int row_bitset(unsigned int sudoku[9][9], int row_index);
-static int col_bitset(unsigned int sudoku[9][9], int col_index);
-static bool box_conflict(unsigned int sudoku[9][9], int row_index, int col_index);
-static bool row_conflict(unsigned int sudoku[9][9], int col_index);
-static bool col_conflict(unsigned int sudoku[9][9], int col_index);
-static bool load_in_line_format(unsigned int sudoku[9][9], int ch);
-static bool load_in_square_format(unsigned int sudoku[9][9], int ch);
+#include "auxiliary.h"
 
 /* ************************************************************** *
  *               Functions required by assignment                 *
