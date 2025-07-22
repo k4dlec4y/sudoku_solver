@@ -1,4 +1,11 @@
 /**
+ * @brief  Converts a number to it's bitset representation in sudoku/
+ * 
+ * @param number  integer from 1 to 9
+ */
+unsigned int num_to_bitset(int number);
+
+/**
  * @brief  Drop number from bit set.
  *
  * For detailed description, see bitset_add.

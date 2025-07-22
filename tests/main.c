@@ -2,6 +2,13 @@
 #include <stdbool.h>
 #include "../include/auxiliary.h"
 
+void num_to_bitset_test(void)
+{
+    assert(num_to_bitset(3) == 0b100);
+    assert(num_to_bitset(1) == 0b1);
+    assert(num_to_bitset(9) == 0b100000000);
+}
+
 void bitset_drop_test(void)
 {
     assert(bitset_drop(0b111, 2) == 0b101);

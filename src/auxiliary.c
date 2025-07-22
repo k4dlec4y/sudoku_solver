@@ -9,6 +9,11 @@ const unsigned int ROWS = 3;
 const char LINE[] = "+=======+=======+=======+";
 const char NUMBER_LINE[] = "| x x x | x x x | x x x |\n";
 
+unsigned int num_to_bitset(int number)
+{
+    return 0x1 << (number - 1);
+}
+
 unsigned int bitset_drop(unsigned int original, int number)
 {
     if (number < 1 || number > 9)
