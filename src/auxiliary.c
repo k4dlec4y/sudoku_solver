@@ -22,7 +22,7 @@ bool bitset_is_set(unsigned int original, int query)
     if (query < 1 || query > 9)
         return false;
 
-	return ((original >> (query - 1)) & 0x1) == 0x1;
+    return ((original >> (query - 1)) & 0x1) == 0x1;
 }
 
 bool bitset_is_unique(unsigned int original)
@@ -235,7 +235,7 @@ bool load_in_square_format(unsigned int sudoku[9][9], int ch)
         if (ch != '\n')
             return false;
 
-        count = load_number_line(sudoku, count);
+        count = load_number_lines(sudoku, count);
         if (count % 27 != 0)
             return false;
 
