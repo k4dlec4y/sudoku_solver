@@ -3,34 +3,46 @@
 
 /**
  * @brief Loads sudoku from stdin in single line format.
+ * 
+ * @note This function prints on stderr, if wrong format was encountered.
  *
+ * @param file FILE * of input file, from which is sudoku loaded
  * @param sudoku 2D array of digit bitsets
  * @param ch already loaded char, based on which the format was decided
  *
- * @return true, if the input was in the right format
+ * @return true, if the input is in the correct format
  */
-bool load_in_line_format(unsigned int sudoku[9][9], int ch);
+bool load_in_line_format(FILE *file,
+                         unsigned int sudoku[9][9], int ch);
 
 /**
  * @brief Loads 3 sets of consecutive number lines, when loading sudoku
  *        in square format. Also checks the format.
+ * 
+ * @note This function prints on stderr, if wrong format was encountered.
  *
+ * @param file FILE * of input file, from which is sudoku loaded
  * @param sudoku 2D array of digit bitsets
  * @param count of already loaded numbers into sudoku
  * 
- * @return count of last loaded char 
+ * @return count of loaded chars, should be % 27 == 0 for success
  */
-int load_number_lines(unsigned int sudoku[9][9], int count);
+int load_number_lines(FILE *file,
+                      unsigned int sudoku[9][9], int count);
 
 /**
  * @brief Loads sudoku from stdin in square format.
+ * 
+ * @note This function prints on stderr, if wrong format was encountered.
  *
+ * @param file FILE * of input file, from which is sudoku loaded
  * @param sudoku 2D array of digit bitsets
  * @param ch already loaded char, based on which the format was decided
  *
- * @return true, if the input was in the right format
+ * @return true, if the input is in the correct format
  */
-bool load_in_square_format(unsigned int sudoku[9][9], int ch);
+bool load_in_square_format(FILE *file,
+                           unsigned int sudoku[9][9], int ch);
 
 /**
  * @brief Load the sudoku from STDIN.
@@ -48,11 +60,13 @@ bool load_in_square_format(unsigned int sudoku[9][9], int ch);
  *
  * @note The exact format is described in readme file.
  *
- * @param sudoku 2D array to store digit bitsets, passed in undefined state.
+ * @param file FILE * of input file, from which is sudoku loaded
+ * @param sudoku 2D array to store digit bitsets, passed in undefined state
  *
- * @return true if sudoku was successfuly loaded, false otherwise.
+ * @return true if sudoku was successfuly loaded, false otherwise;
+ * also returns false for EOF
  */
-bool load(unsigned int sudoku[9][9]);
+bool load(FILE *file, unsigned int sudoku[9][9]);
 
 /**
  * @brief Prints sudoku to STDOUT in grid with highlighted boxes.
@@ -76,8 +90,9 @@ bool load(unsigned int sudoku[9][9]);
  * +=======+=======+=======+
  * @endverbatim
  *
+ * @param file FILE * of output file, where is sudoku printed
  * @param sudoku 2D array of digit bitsets
  */
-void print(unsigned int sudoku[9][9]);
+void print(FILE *file, unsigned int sudoku[9][9]);
 
 #endif  // INPUT_OUTPUT_H

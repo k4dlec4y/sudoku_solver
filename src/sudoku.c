@@ -5,7 +5,7 @@
 
 bool eliminate_row(unsigned int sudoku[9][9], int row_index)
 {
-    assert(row_index > 0 && row_index < 10);
+    assert(row_index >= 0 && row_index < 9);
 
     bool eliminated = false;
     unsigned int done_numbers = row_bitset(sudoku, row_index);
@@ -31,7 +31,7 @@ bool eliminate_row(unsigned int sudoku[9][9], int row_index)
 
 bool eliminate_col(unsigned int sudoku[9][9], int col_index)
 {
-    assert(col_index > 0 && col_index < 10);
+    assert(col_index >= 0 && col_index < 9);
 
     bool eliminated = false;
     unsigned int done_numbers = col_bitset(sudoku, col_index);
@@ -57,8 +57,8 @@ bool eliminate_col(unsigned int sudoku[9][9], int col_index)
 
 bool eliminate_box(unsigned int sudoku[9][9], int row_index, int col_index)
 {
-    assert(row_index > 0 && row_index < 10);
-    assert(col_index > 0 && col_index < 10);
+    assert(row_index >= 0 && row_index < 9);
+    assert(col_index >= 0 && col_index < 9);
 
     bool eliminated = false;
     unsigned int done_numbers = box_bitset(sudoku, row_index, col_index);
@@ -137,7 +137,7 @@ bool solve(unsigned int sudoku[9][9])
     return !needs_solving(sudoku);
 }
 
-bool generic_solve(unsigned int sudoku[9][9])
-{
-    return false; // todo
-}
+// bool generic_solve(unsigned int sudoku[9][9])
+// {
+//     return false; // todo
+// }

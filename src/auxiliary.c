@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include "../include/auxiliary.h"
 
-const unsigned int FULL_BITSET = 0x1ff;
+static const unsigned int FULL_BITSET = 0x1ff;
 
 unsigned int num_to_bitset(int number)
 {
