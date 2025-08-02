@@ -10,36 +10,35 @@ static const unsigned int LINE_LEN = 26;
 static const char LINE[] = "+=======+=======+=======+\n";
 static const char NUMBER_LINE[] = "| x x x | x x x | x x x |\n";
 
-bool load_in_line_format(FILE *file,
-                         unsigned int sudoku[9][9], int ch)
+bool load_in_line_format(FILE *file, unsigned int sudoku[9][9], int ch)
 {
-    for (int count = 0; count < 81; count++) {
+    for (size_t i = 0; i < 9; ++i) {
+        for (size_t j = 0; j < 9; ++j) {
 
-        if (ch == '0')
-            sudoku[count / 9][count % 9] = FULL_BITSET; 
+            if (ch == '0')
+                sudoku[i][j] = FULL_BITSET; 
 
-        else if (ch >= '1' && ch <= '9')
-            sudoku[count / 9][count % 9] = num_to_bitset(ch - '0');
+            else if (ch >= '1' && ch <= '9')
+                sudoku[i][j] = num_to_bitset(ch - '0');
 
-        else {
-            fprintf(stderr,
-                    " - expected char from '0' to '9', got %c instead\n",
-                    ch);
-            return false;
+            else {
+                fprintf(stderr, " - expected char from '0' to '9', "
+                                "got %c instead\n", ch);
+                return false;
+            }
+
+            ch = fgetc(file);
         }
-
-        ch = fgetc(file);
     }
 
     return ch == '\n' || ch == EOF;
 }
 
-int load_number_lines(FILE *file,
-                      unsigned int sudoku[9][9], int count)
+int load_number_lines(FILE *file, unsigned int sudoku[9][9], int count)
 {
     int ch;
 
-    for (size_t j = 0; j < 3 * LINE_LEN; j++) {
+    for (size_t j = 0; j < 3 * LINE_LEN; ++j) {
 
         ch = fgetc(file);
 
@@ -48,38 +47,34 @@ int load_number_lines(FILE *file,
 
         if ('x' == NUMBER_LINE[j % 26]) {
 
-            unsigned int new;
+            unsigned int cell;
 
             if (ch >= '1' && ch <= '9')
-                new = num_to_bitset(ch - '0');
+                cell = num_to_bitset(ch - '0');
     
             else if (ch == '.' || ch == '0')
-                new = FULL_BITSET;
+                cell = FULL_BITSET;
 
             else {
-                fprintf(stderr,
-                        " - expected char from '0' to '9' or '.', got %c instead\n",
-                        ch);
+                fprintf(stderr, " - expected char from '0' to '9' or '.', "
+                                "got %c instead\n", ch);
                 return count;
             }
 
-            sudoku[count / 9][count % 9] = new;
-            count++;
+            sudoku[count / 9][count % 9] = cell;
+            ++count;
             continue;
         }
 
-        fprintf(stderr,
-                " - expected '%c', got %c instead\n",
+        fprintf(stderr, " - expected '%c', got %c instead\n",
                 NUMBER_LINE[j % 26], ch);
-
         return count;
     }
 
     return count;
 }
 
-bool load_in_square_format(FILE *file,
-                           unsigned int sudoku[9][9], int ch)
+bool load_in_square_format(FILE *file, unsigned int sudoku[9][9], int ch)
 {
     int count = 0;
 
@@ -87,6 +82,7 @@ bool load_in_square_format(FILE *file,
 
         for (size_t j = 0; j < LINE_LEN - 1; j++) {
             if (ch != LINE[j]) {
+
                 fprintf(stderr, " - expected '%c', got %c instead\n",
                         LINE[j], ch);
                 return false;
@@ -95,13 +91,11 @@ bool load_in_square_format(FILE *file,
             ch = fgetc(file);
         }
 
-        if (i == 3) {  // in this if the function ends
+        if (i == 3)  // in this if the function ends
             return ch == '\n' || ch == EOF;
-        }
 
         if (ch != '\n') {
-            fprintf(stderr, " - expected new line, got %c instead\n",
-                    ch);
+            fprintf(stderr, " - expected new line, got %c instead\n", ch);
             return false;
         }
 
