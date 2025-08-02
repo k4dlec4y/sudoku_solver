@@ -23,7 +23,7 @@ bool load_in_line_format(FILE *file,
 
         else {
             fprintf(stderr,
-                    " - expected char from '0' - '9', got %c instead\n",
+                    " - expected char from '0' to '9', got %c instead\n",
                     ch);
             return false;
         }
@@ -58,7 +58,7 @@ int load_number_lines(FILE *file,
 
             else {
                 fprintf(stderr,
-                        " - expected char from '0' - '9' or '.', got %c instead\n",
+                        " - expected char from '0' to '9' or '.', got %c instead\n",
                         ch);
                 return count;
             }
@@ -95,13 +95,15 @@ bool load_in_square_format(FILE *file,
             ch = fgetc(file);
         }
 
-        if (ch != '\n') {
-            fprintf(stderr, " - expected '\n', got %c instead\n", ch);
-            return false;
+        if (i == 3) {  // in this if the function ends
+            return ch == '\n' || ch == EOF;
         }
 
-        if (i == 3)  // in this if the function ends
-            return true;
+        if (ch != '\n') {
+            fprintf(stderr, " - expected new line, got %c instead\n",
+                    ch);
+            return false;
+        }
 
         count = load_number_lines(file, sudoku, count);
         if (count % 27 != 0)
@@ -124,10 +126,10 @@ bool load(FILE *file, unsigned int sudoku[9][9])
         return load_in_line_format(file, sudoku, ch);
 
     else if (ch == EOF)
-        printf(" + no more sudoku to load\n");
+        puts(" + no more sudoku to load");
 
     else
-        printf(" - sudoku starts with unexpected character\n");
+        puts(" - sudoku starts with unexpected character");
 
     return false;  // false also for EOF, even though it is not an error
 }

@@ -136,8 +136,3 @@ bool solve(unsigned int sudoku[9][9])
 
     return !needs_solving(sudoku);
 }
-
-// bool generic_solve(unsigned int sudoku[9][9])
-// {
-//     return false; // todo
-// }
