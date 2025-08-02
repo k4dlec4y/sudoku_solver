@@ -2,9 +2,11 @@
 #define AUXILIARY_H
 
 /**
- * @brief  Converts a number to it's bitset representation in sudoku/
+ * @brief  Converts a number to it's bitset representation in sudoku
  * 
  * @param number  integer from 1 to 9
+ * 
+ * @return        bitset with only one 1 set
  */
 unsigned int num_to_bitset(int number);
 
@@ -40,11 +42,7 @@ bool bitset_is_set(unsigned int original, int query);
 bool bitset_is_unique(unsigned int original);
 
 /**
- * @brief Return next number present in bit set.
- *
- * This function encapsulates a bit ands, ors and whatever
- * other bit operations, that would flood the toplevel code
- * with implementation details.
+ * @brief  Return next number present in bit set.
  *
  * @param original  contents of the 2D sudoku cell.
  * @param previous  last known number present, 0 for start
@@ -58,54 +56,53 @@ bool bitset_is_unique(unsigned int original);
 int bitset_next(unsigned int bitset, int previous);
 
 /**
- * @brief Compute the bitset of all done numbers in the box.
+ * @brief  Compute the bitset of all unique numbers in the box.
  *
- * @param sudoku 2D array of digit bitsets
- * @param row_index of the top most row in box, one of 0, 3, 6
- * @param col_index of the left most column in box, one of 0, 3, 6
+ * @param sudoku  2D array of digit bitsets
+ * @param row     the top most row index of the box, one of 0, 3, 6
+ * @param col     the left most column index of the box, one of 0, 3, 6
  */
-int box_bitset(unsigned int sudoku[9][9], int row_index, int col_index);
+int box_bitset(unsigned int sudoku[9][9], int row, int col);
 
 /**
- * @brief Compute the bitset of all done numbers in the row.
+ * @brief  Compute the bitset of all unique numbers in the row.
  *
- * @param sudoku 2D array of digit bitsets
- * @param row_index
+ * @param sudoku  2D array of digit bitsets
+ * @param row     index of the row, 0 to 8
  */
-int row_bitset(unsigned int sudoku[9][9], int row_index);
+int row_bitset(unsigned int sudoku[9][9], int row);
 
 /**
- * @brief Compute the bitset of all done numbers in the col.
+ * @brief  Compute the bitset of all unique numbers in the col.
  *
- * @param sudoku 2D array of digit bitsets
- * @param col_index
+ * @param sudoku  2D array of digit bitsets
+ * @param col     index of the col, 0 to 8
  */
-int col_bitset(unsigned int sudoku[9][9], int col_index);
+int col_bitset(unsigned int sudoku[9][9], int col);
 
 /**
- * @brief Checks, whether there is a conflict in the box.
+ * @brief  Checks, whether there is a conflict in the box.
  *
- * @param sudoku 2D array of digit bitsets
- * @param row_index of the top most most row in box, one of 0, 3, 6
- * @param col_index of the left most column in box, one of 0, 3, 6
+ * @param sudoku  2D array of digit bitsets
+ * @param row     the top most row index of the box, one of 0, 3, 6
+ * @param col     the left most column index of the box, one of 0, 3, 6
  */
-bool box_conflict(unsigned int sudoku[9][9],
-                  int row_index, int col_index);
+bool box_conflict(unsigned int sudoku[9][9], int row, int col);
 
 /**
- * @brief Checks, whether there is a conflict in the row.
+ * @brief  Checks, whether there is a conflict in the row.
  *
- * @param sudoku 2D array of digit bitsets
- * @param row_index
+ * @param sudoku  2D array of digit bitsets
+ * @param row     index of the row, 0 to 8
  */
-bool row_conflict(unsigned int sudoku[9][9], int row_index);
+bool row_conflict(unsigned int sudoku[9][9], int row);
 
 /**
- * @brief Checks, whether there is a conflict in the col.
+ * @brief  Checks, whether there is a conflict in the col.
  *
- * @param sudoku 2D array of digit bitsets
- * @param col_index
+ * @param sudoku  2D array of digit bitsets
+ * @param col     index of the col, 0 to 8
  */
-bool col_conflict(unsigned int sudoku[9][9], int col_index);
+bool col_conflict(unsigned int sudoku[9][9], int col);
 
-#endif // AUXILIARY_H
+#endif  // AUXILIARY_H
