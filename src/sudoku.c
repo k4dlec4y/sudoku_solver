@@ -10,7 +10,7 @@ bool eliminate_row(unsigned int sudoku[9][9], int row)
     bool eliminated = false;
     unsigned int unique_numbers = row_bitset(sudoku, row);
 
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < 9; ++i) {
 
         unsigned int bitset = sudoku[row][i];
         if (bitset_is_unique(bitset))
@@ -36,7 +36,7 @@ bool eliminate_col(unsigned int sudoku[9][9], int col)
     bool eliminated = false;
     unsigned int unique_numbers = col_bitset(sudoku, col);
 
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < 9; ++i) {
 
         unsigned int bitset = sudoku[i][col];
         if (bitset_is_unique(bitset))
@@ -63,8 +63,8 @@ bool eliminate_box(unsigned int sudoku[9][9], int row, int col)
     bool eliminated = false;
     unsigned int unique_numbers = box_bitset(sudoku, row, col);
 
-    for (int i = row; i < row + 3; i++) {
-        for (int j = col; j < col + 3; j++) {
+    for (int i = row; i < row + 3; ++i) {
+        for (int j = col; j < col + 3; ++j) {
 
             if (bitset_is_unique(sudoku[i][j]))
                 continue;
@@ -85,8 +85,8 @@ bool eliminate_box(unsigned int sudoku[9][9], int row, int col)
 
 bool needs_solving(unsigned int sudoku[9][9])
 {
-    for (int i = 0; i < 9; i++) {
-        for (int j = 0; j < 9; j++) {
+    for (int i = 0; i < 9; ++i) {
+        for (int j = 0; j < 9; ++j) {
 
             if (!bitset_is_unique(sudoku[i][j]))
                 return true;
@@ -98,12 +98,12 @@ bool needs_solving(unsigned int sudoku[9][9])
 
 bool is_valid(unsigned int sudoku[9][9])
 {
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < 9; ++i) {
 
         if (col_conflict(sudoku, i) || row_conflict(sudoku, i))
             return false;
 
-        for (int j = 0; j < 9; j++) {
+        for (int j = 0; j < 9; ++j) {
 
             if (sudoku[i][j] == 0x0 ||
                 (i % 3 == 0 && j % 3 == 0 && box_conflict(sudoku, i, j)))
@@ -122,7 +122,7 @@ bool solve(unsigned int sudoku[9][9])
 
         eliminated = false;
 
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < 9; ++i)
             eliminated = eliminated ||
                          eliminate_row(sudoku, i) ||
                          eliminate_col(sudoku, i);
