@@ -4,22 +4,22 @@
 /**
  * @brief  Loads sudoku from FILE handler in single line format.
  * 
- * @note  In case of invalid input, error message is printed on STDERR and
+ * @note  In case of invalid input, error message is printed on STDOUT and
  *        sudoku grid may be contain partially loaded sudoku. 
  *
  * @param file    FILE * of input file, from which is sudoku loaded
  * @param sudoku  2D array of digit bitsets
  * @param ch      already loaded char, based on which the format was decided
  *
- * @return  true, if the input is loaded and in the correct format
+ * @return  0, if the input is loaded and in the correct format, -1 otherwise
  */
-bool load_in_line_format(FILE *file, unsigned int sudoku[9][9], int ch);
+int load_in_line_format(FILE *file, unsigned int sudoku[9][9], int ch);
 
 /**
  * @brief  Loads 3 sets of consecutive lines with numbers, when loading sudoku
  *         in square format. Also checks the format.
  * 
- * @note  In case of invalid input, error message is printed on STDERR and
+ * @note  In case of invalid input, error message is printed on STDOUT and
  *        sudoku grid may be contain partially loaded sudoku. 
  *
  * @param file    FILE * of input file, from which is sudoku loaded
@@ -33,16 +33,16 @@ int load_number_lines(FILE *file, unsigned int sudoku[9][9], int count);
 /**
  * @brief  Loads sudoku from FILE handler in square format.
  * 
- * @note  In case of invalid input, error message is printed on STDERR and
+ * @note  In case of invalid input, error message is printed on STDOUT and
  *        sudoku grid may be contain partially loaded sudoku. 
  *
  * @param file    FILE * of input file, from which is sudoku loaded
  * @param sudoku  2D array of digit bitsets
  * @param ch      already loaded char, based on which the format was decided
  *
- * @return  true, if the input is loaded and in the correct format
+ * @return  0, if the input is loaded and in the correct format, -1 otherwise
  */
-bool load_in_square_format(FILE *file, unsigned int sudoku[9][9], int ch);
+int load_in_square_format(FILE *file, unsigned int sudoku[9][9], int ch);
 
 /**
  * @brief  Loads the sudoku from FILE handler.
@@ -54,18 +54,19 @@ bool load_in_square_format(FILE *file, unsigned int sudoku[9][9], int ch);
  * @example
  * 000456789000123456000789123312000967697000845845000312231574000968231000574968000
  *
- * @note  In case of invalid input, error message is printed on STDERR and
- *        sudoku grid may be contain partially loaded sudoku. 
+ * @note  In case of invalid input, error message is printed on STDOUT and
+ *        sudoku grid may contain partially loaded sudoku. 
  *
  * @note  The exact format is described in readme file.
  *
  * @param file    FILE * of input file, from which is sudoku loaded
  * @param sudoku  2D array to store digit bitsets, passed in undefined state
  *
- * @return  true if sudoku was successfuly loaded, false otherwise;
- *          also returns false for EOF
+ * @return  0 if sudoku was successfuly loaded,
+ *          1 if the first character of sudoku was EOF
+ *          -1 if the sudoku was in invalid format
  */
-bool load(FILE *file, unsigned int sudoku[9][9]);
+int load(FILE *file, unsigned int sudoku[9][9]);
 
 /**
  * @brief Prints sudoku to FILE handle in grid with highlighted boxes.

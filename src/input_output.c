@@ -10,7 +10,7 @@ static const unsigned int LINE_LEN = 26;
 static const char LINE[] = "+=======+=======+=======+\n";
 static const char NUMBER_LINE[] = "| x x x | x x x | x x x |\n";
 
-bool load_in_line_format(FILE *file, unsigned int sudoku[9][9], int ch)
+int load_in_line_format(FILE *file, unsigned int sudoku[9][9], int ch)
 {
     for (size_t i = 0; i < 9; ++i) {
         for (size_t j = 0; j < 9; ++j) {
@@ -22,16 +22,16 @@ bool load_in_line_format(FILE *file, unsigned int sudoku[9][9], int ch)
                 sudoku[i][j] = num_to_bitset(ch - '0');
 
             else {
-                fprintf(stderr, " - expected char from '0' to '9', "
-                                "got %c instead\n", ch);
-                return false;
+                printf(" - expected char from '0' to '9', "
+                       "got %c instead\n", ch);
+                return -1;
             }
 
             ch = fgetc(file);
         }
     }
 
-    return ch == '\n' || ch == EOF;
+    return ch == '\n' || ch == EOF ? 0 : -1;
 }
 
 int load_number_lines(FILE *file, unsigned int sudoku[9][9], int count)
@@ -56,8 +56,8 @@ int load_number_lines(FILE *file, unsigned int sudoku[9][9], int count)
                 cell = FULL_BITSET;
 
             else {
-                fprintf(stderr, " - expected char from '0' to '9' or '.', "
-                                "got %c instead\n", ch);
+                printf(" - expected char from '0' to '9' or '.', "
+                       "got %c instead\n", ch);
                 return count;
             }
 
@@ -66,15 +66,14 @@ int load_number_lines(FILE *file, unsigned int sudoku[9][9], int count)
             continue;
         }
 
-        fprintf(stderr, " - expected '%c', got %c instead\n",
-                NUMBER_LINE[j % 26], ch);
+        printf(" - expected '%c', got %c instead\n", NUMBER_LINE[j % 26], ch);
         return count;
     }
 
     return count;
 }
 
-bool load_in_square_format(FILE *file, unsigned int sudoku[9][9], int ch)
+int load_in_square_format(FILE *file, unsigned int sudoku[9][9], int ch)
 {
     int count = 0;
 
@@ -83,25 +82,24 @@ bool load_in_square_format(FILE *file, unsigned int sudoku[9][9], int ch)
         for (size_t j = 0; j < LINE_LEN - 1; j++) {
             if (ch != LINE[j]) {
 
-                fprintf(stderr, " - expected '%c', got %c instead\n",
-                        LINE[j], ch);
-                return false;
+                printf(" - expected '%c', got %c instead\n", LINE[j], ch);
+                return -1;
             }
 
             ch = fgetc(file);
         }
 
         if (i == 3)  // in this if the function ends
-            return ch == '\n' || ch == EOF;
+            return ch == '\n' || ch == EOF ? 0 : -1;
 
         if (ch != '\n') {
-            fprintf(stderr, " - expected new line, got %c instead\n", ch);
-            return false;
+            printf(" - expected new line, got %c instead\n", ch);
+            return -1;
         }
 
         count = load_number_lines(file, sudoku, count);
         if (count % 27 != 0)
-            return false;
+            return -1;
 
         ch = fgetc(file);
     }
@@ -109,7 +107,7 @@ bool load_in_square_format(FILE *file, unsigned int sudoku[9][9], int ch)
     assert(false);
 }
 
-bool load(FILE *file, unsigned int sudoku[9][9])
+int load(FILE *file, unsigned int sudoku[9][9])
 {
     int ch = fgetc(file);
 
@@ -119,13 +117,13 @@ bool load(FILE *file, unsigned int sudoku[9][9])
     else if (ch >= '0' && ch <= '9')
         return load_in_line_format(file, sudoku, ch);
 
-    else if (ch == EOF)
+    else if (ch == EOF) {
         puts(" + no more sudoku to load");
+        return 1;
+    }
 
-    else
-        puts(" - sudoku starts with unexpected character");
-
-    return false;  // false also for EOF, even though it is not an error
+    puts(" - sudoku starts with unexpected character");
+    return -1;
 }
 
 void print(FILE *file, unsigned int sudoku[9][9])
