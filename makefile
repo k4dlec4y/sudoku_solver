@@ -20,11 +20,23 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(BUILD_DIR)
 	$(CC) $(CFLAGS) $< -o $@
 
-tests: $(TEST_DIR)/main.c $(SRC_DIR)/auxiliary.c $(SRC_DIR)/input_output.c
+tests: $(TARGET)
 	@mkdir -p $(BUILD_DIR)
-	$(CC) $(TFLAGS) $^ -o $(BUILD_DIR)/test
-	@chmod u+x $(BUILD_DIR)/test
-	@./$(BUILD_DIR)/test
+	@$(CC) $(TFLAGS) src/auxiliary.c tests/main.c -o $(BUILD_DIR)/aux_test
+	@chmod u+x $(BUILD_DIR)/aux_test
+	@./$(BUILD_DIR)/aux_test
+	@./build/sudoku tests/sudoku01.txt tests/sudoku02.txt > /dev/null || true
+	@if cmp tests/sudoku01.txt.out tests/sudoku01.txt.result; then \
+		echo "sudoku01.txt was solved correctly by the program"; \
+	else \
+		echo "sudoku01.txt was NOT solved correctly by the program"; \
+	fi
+
+	@if cmp tests/sudoku02.txt.result tests/sudoku02.txt.out; then \
+		echo "sudoku02.txt was solved correctly by the program"; \
+	else \
+		echo "sudoku02.txt was NOT solved correctly by the program"; \
+	fi
 
 clean:
 	rm -rf $(BUILD_DIR)

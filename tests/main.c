@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include "../include/auxiliary.h"
 
 void num_to_bitset_test(void)
@@ -167,5 +168,7 @@ int main(void)
     box_conflict_test(sudoku);
     row_conflict_test(sudoku);
     col_conflict_test(sudoku);
+
+    puts("test of auxiliary functions passed");
     return 0;
 }
