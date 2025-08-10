@@ -2,6 +2,13 @@
 #define INPUT_OUTPUT_H
 
 /**
+ * @file  input_output.h
+ *
+ * This header contains functions related to both input and output of Sudoku
+ * puzzles.
+ */
+
+/**
  * @brief  Loads sudoku from FILE handler in single line format.
  * 
  * @note  In case of invalid input, error message is printed on STDOUT and

@@ -1,14 +1,17 @@
+#ifndef SUDOKU_H
+#define SUDOKU_H
+
+#include <stdbool.h>
+
 /**
  * @file sudoku.h
  * @author PB071
  * @date 10 Feb 2024
  * @brief Sudoku - second homework of PB071 in spring semester of 2024.
+ * 
+ * This header contains functions related to solving by eliminations and
+ * validation. 
  */
-
-#ifndef SUDOKU_H
-#define SUDOKU_H
-
-#include <stdbool.h>
 
 /**
  * @brief  Eliminate the possible digits in unknown squares in the row.
@@ -51,7 +54,7 @@ bool needs_solving(unsigned int sudoku[9][9]);
 /**
  * @brief  Check if the set digits do not conflict with one another.
  *
- * @note  The squares that do not have set digits are not checked!
+ * @note  The squares that do not have set (unique) digits are not checked!
  *
  * @param sudoku  2D array of digit bitsets
  */

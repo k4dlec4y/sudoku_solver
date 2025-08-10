@@ -4,6 +4,13 @@
 #include <stdbool.h>
 
 /**
+ * @file  generic_solve.h
+ *
+ * This header contains everything related to the backtracking part of
+ * the program.
+ */
+
+/**
  * @brief  Drops a number from non-unique cells of the row and returns a bitset
  *         of cells from which the number was indeed dropped.
  *

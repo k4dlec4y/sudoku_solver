@@ -2,6 +2,14 @@
 #define AUXILIARY_H
 
 /**
+ * @file  auxiliary.h
+ *
+ * This header contains auxiliary functions which are used when loading and
+ * solving Sudoku puzzles. Most of them only encapsulate bit ANDs, ORs and
+ * SHIFTs.
+ */
+
+/**
  * @brief  Converts a number to it's bitset representation in sudoku
  * 
  * @param number  integer from 1 to 9
@@ -12,8 +20,6 @@ unsigned int num_to_bitset(int number);
 
 /**
  * @brief  Drop number from bit set.
- *
- * For detailed description, see bitset_add.
  *
  * @param original  contents of the 2D sudoku cell.
  * @param number    to be dropped from the set
